@@ -101,3 +101,119 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: |
+  Build a high-end 3D, dynamic professional portfolio for Bethapudi Rupesh
+  (AI/ML Engineer, B.Tech CSE, Kalasalingam) using resume content + uploaded
+  full-cover photo. Backend: persist contact form messages and expose stats.
+
+backend:
+  - task: "POST /api/contact - validate & persist contact messages"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented with Pydantic validation (name 2-80, valid email, message 10-2000). Persists to mongo collection contact_messages with uuid id and utc created_at."
+        - working: true
+          agent: "testing"
+          comment: "✅ All tests passed. Happy path: valid payload returns 200 with id, status:received, created_at. Validation errors: missing name (422), invalid email (422), message < 10 chars (422), name < 2 chars (422). Data persists correctly to MongoDB."
+
+  - task: "GET /api/contact - list latest messages"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Returns latest N (default 50, max 200) sorted by created_at desc, strips _id."
+        - working: true
+          agent: "testing"
+          comment: "✅ Verified working. Returns list of messages with all fields (id, name, email, message, created_at). Previously inserted messages appear correctly. Messages properly sorted by created_at descending."
+
+  - task: "GET /api/stats - aggregate stats"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "low"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Returns total_messages count + static IMPACT_STATS array."
+        - working: true
+          agent: "testing"
+          comment: "✅ Verified working. Returns correct structure with total_messages (int) and impact array (4 objects with label/value/suffix). total_messages accurately reflects count in database and increments correctly after new POST."
+
+  - task: "GET /api/health - mongo ping"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "low"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Pings mongo, returns ok or 503."
+        - working: true
+          agent: "testing"
+          comment: "✅ Verified working. Returns 200 with {status:ok}. MongoDB connection healthy."
+
+frontend:
+  - task: "Contact form wired to POST /api/contact"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/Contact.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Replaced localStorage mock with axios POST to ${REACT_APP_BACKEND_URL}/api/contact. Toasts on success/failure."
+
+metadata:
+  created_by: "main_agent"
+  version: "1.0"
+  test_sequence: 1
+  run_ui: false
+
+test_plan:
+  current_focus: []
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+    - agent: "main"
+      message: |
+        Backend implemented at /app/backend/server.py with 4 endpoints under /api prefix.
+        Please test:
+          1. POST /api/contact with valid + invalid payloads (missing fields, bad email, short message).
+          2. GET /api/contact returns the inserted record(s).
+          3. GET /api/stats reflects total_messages count.
+          4. GET /api/health returns 200 ok.
+        Use REACT_APP_BACKEND_URL from frontend/.env as base. All routes prefixed with /api.
+    - agent: "testing"
+      message: |
+        ✅ Backend testing complete - ALL 10 TESTS PASSED
+        
+        Tested all 4 endpoints comprehensively:
+        1. GET /api/health - MongoDB ping working, returns 200 with status:ok
+        2. POST /api/contact - Happy path working (returns id, status:received, created_at)
+        3. POST /api/contact - All validation errors working (422 for missing name, invalid email, short message, short name)
+        4. GET /api/contact - Returns list of messages, properly sorted by created_at desc
+        5. GET /api/stats - Returns correct structure (total_messages + impact array with 4 items)
+        6. Stats increment - total_messages increments correctly after POST
+        
+        All backend APIs are functioning correctly with proper validation, data persistence, and error handling.
+        No critical or major issues found. Backend is production-ready.

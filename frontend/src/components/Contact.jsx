@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { Mail, MapPin, Phone, Send, Linkedin, Github } from "lucide-react";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
@@ -6,27 +7,35 @@ import { Label } from "./ui/label";
 import { toast } from "sonner";
 import { portfolioData } from "../mock";
 
+const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+
 const Contact = () => {
   const { profile } = portfolioData;
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sending, setSending] = useState(false);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.message) {
-      toast.error("Please fill all fields");
+    if (!form.name.trim() || !form.email.trim() || form.message.trim().length < 10) {
+      toast.error("Please fill all fields (message min 10 chars)");
       return;
     }
     setSending(true);
-    // mock save to localStorage
-    setTimeout(() => {
-      const stored = JSON.parse(localStorage.getItem("portfolio_messages") || "[]");
-      stored.push({ ...form, at: new Date().toISOString() });
-      localStorage.setItem("portfolio_messages", JSON.stringify(stored));
+    try {
+      await axios.post(`${API}/contact`, {
+        name: form.name.trim(),
+        email: form.email.trim(),
+        message: form.message.trim(),
+      });
       toast.success("Message received — I'll reply within 24h.");
       setForm({ name: "", email: "", message: "" });
+    } catch (err) {
+      const detail = err?.response?.data?.detail;
+      const msg = Array.isArray(detail) ? detail[0]?.msg : detail;
+      toast.error(msg || "Could not send. Please try again.");
+    } finally {
       setSending(false);
-    }, 900);
+    }
   };
 
   return (
