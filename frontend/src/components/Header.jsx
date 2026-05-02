@@ -55,7 +55,7 @@ const Header = () => {
   const scrolled = useScrolled(30);
   const [open, setOpen] = useState(false);
 
-  // setOpen is a stable setState function; scrollToId is module-scoped (pure).
+  // scrollToId is module-scoped & pure; setOpen is stable. Listed explicitly for lint.
   const handleNav = useCallback((id) => {
     scrollToId(id);
     setOpen(false);

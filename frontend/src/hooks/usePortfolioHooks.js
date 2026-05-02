@@ -31,6 +31,9 @@ export const useTilt = (intensity = 14) => {
       el.removeEventListener("mousemove", handleMove);
       el.removeEventListener("mouseleave", handleLeave);
     };
+    // All referenced identifiers (el, handleMove, handleLeave, event-params) are locally
+    // scoped inside the effect; `intensity` is the only external prop.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [intensity]);
 
   return ref;
@@ -88,11 +91,16 @@ export const useReveal = (rootSelector = ".reveal") => {
     );
     document.querySelectorAll(rootSelector).forEach((el) => observer.observe(el));
     return observer;
+    // `observer`, `entries`, `el`, `IntersectionObserver`, `document` are all either
+    // created inside this callback or are globals. Only `rootSelector` is external.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rootSelector]);
 
   useEffect(() => {
     const observer = scan();
     return () => observer.disconnect();
+    // `observer` is local to this effect; `scan` is the only external dep.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scan]);
 };
 
@@ -107,6 +115,9 @@ export const useScrolled = (threshold = 30) => {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+    // `onScroll` is defined inside the effect; `setScrolled` is a stable useState setter.
+    // Only `threshold` is external.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [threshold]);
 
   return scrolled;
