@@ -55,7 +55,7 @@ const Skills = () => {
       <div className="mt-16 relative py-6 border-y border-white/8 bg-white/[0.015]">
         <div className="flex marquee-track whitespace-nowrap">
           {[...allSkills, ...allSkills].map((s, i) => (
-            <span key={i} className="font-display text-3xl md:text-5xl font-semibold text-slate-700 px-8 flex items-center gap-8">
+            <span key={`${s}-${i}`} className="font-display text-3xl md:text-5xl font-semibold text-slate-700 px-8 flex items-center gap-8">
               {s}
               <span className="text-cyan-400 text-2xl">◆</span>
             </span>

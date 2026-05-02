@@ -50,8 +50,8 @@ const Experience = () => {
                   </div>
 
                   <ul className="space-y-2.5">
-                    {e.bullets.map((b, i) => (
-                      <li key={i} className="flex gap-2.5 text-slate-300 text-sm leading-relaxed">
+                    {e.bullets.map((b) => (
+                      <li key={b.slice(0, 40)} className="flex gap-2.5 text-slate-300 text-sm leading-relaxed">
                         <ChevronRight size={16} className="text-cyan-400 mt-0.5 flex-shrink-0" />
                         {b}
                       </li>

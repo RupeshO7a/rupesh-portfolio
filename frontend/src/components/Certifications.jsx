@@ -5,10 +5,10 @@ import { portfolioData } from "../mock";
 const Certifications = () => {
   const { certifications } = portfolioData;
   const achievements = [
-    { value: "+28%", text: "ML accuracy lift on seismic datasets at Infosys" },
-    { value: "-30%", text: "data cleaning time via optimized NumPy/Pandas pipelines" },
-    { value: "-90%", text: "on-chain storage cost via Merkle-tree optimization" },
-    { value: "+15%", text: "forecasting performance with visualization-driven insight" }
+    { id: "acc", value: "+28%", text: "ML accuracy lift on seismic datasets at Infosys" },
+    { id: "clean", value: "-30%", text: "data cleaning time via optimized NumPy/Pandas pipelines" },
+    { id: "chain", value: "-90%", text: "on-chain storage cost via Merkle-tree optimization" },
+    { id: "forecast", value: "+15%", text: "forecasting performance with visualization-driven insight" }
   ];
 
   return (
@@ -56,8 +56,8 @@ const Certifications = () => {
               <Trophy size={14} className="text-amber-300" /> Quantified Impact
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
-              {achievements.map((a, i) => (
-                <div key={i} className="glass rounded-2xl p-6 hover:border-amber-300/30 transition-all hover:-translate-y-1">
+              {achievements.map((a) => (
+                <div key={a.id} className="glass rounded-2xl p-6 hover:border-amber-300/30 transition-all hover:-translate-y-1">
                   <div className="font-display text-4xl font-bold text-amber-300 mb-2">{a.value}</div>
                   <div className="text-sm text-slate-300 leading-relaxed">{a.text}</div>
                 </div>

@@ -24,14 +24,14 @@ const About = () => {
 
         <div className="mt-14 grid lg:grid-cols-12 gap-10">
           <div className="lg:col-span-7 reveal space-y-5">
-            {about.paragraphs.map((p, i) => (
-              <p key={i} className="text-slate-300 text-lg leading-relaxed">
+            {about.paragraphs.map((p) => (
+              <p key={p.slice(0, 24)} className="text-slate-300 text-lg leading-relaxed">
                 {p}
               </p>
             ))}
             <div className="pt-6 grid sm:grid-cols-2 gap-3">
-              {about.highlights.map((h, i) => (
-                <div key={i} className="flex items-start gap-3 p-4 rounded-xl glass hover:border-cyan-400/30 transition-colors">
+              {about.highlights.map((h) => (
+                <div key={h} className="flex items-start gap-3 p-4 rounded-xl glass hover:border-cyan-400/30 transition-colors">
                   <div className="mt-1 w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_10px_#06b6d4] flex-shrink-0" />
                   <span className="text-slate-200 text-sm">{h}</span>
                 </div>

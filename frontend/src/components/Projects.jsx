@@ -57,8 +57,8 @@ const ProjectCard = ({ p, index }) => {
         <p className="mt-5 text-slate-300 leading-relaxed">{p.description}</p>
 
         <ul className="mt-5 space-y-2">
-          {p.bullets.map((b, i) => (
-            <li key={i} className="flex gap-2.5 text-slate-400 text-sm">
+          {p.bullets.map((b) => (
+            <li key={b.slice(0, 40)} className="flex gap-2.5 text-slate-400 text-sm">
               <span className={`mt-2 h-1 w-1 rounded-full ${p.accent === "amber" ? "bg-amber-300" : "bg-cyan-400"} flex-shrink-0`} />
               {b}
             </li>
