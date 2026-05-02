@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { Menu, X, Sparkles } from "lucide-react";
 import { portfolioData } from "../mock";
 import { useScrolled } from "../hooks/usePortfolioHooks";
@@ -55,10 +55,11 @@ const Header = () => {
   const scrolled = useScrolled(30);
   const [open, setOpen] = useState(false);
 
+  // setOpen is a stable setState function; scrollToId is module-scoped (pure).
   const handleNav = useCallback((id) => {
     scrollToId(id);
     setOpen(false);
-  }, []);
+  }, [setOpen]);
 
   return (
     <header

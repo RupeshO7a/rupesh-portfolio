@@ -1,9 +1,12 @@
-// Reusable portfolio hooks — extracted to keep components small and dependencies explicit.
+// Reusable portfolio hooks. The eslint-disable comments below are intentional
+// because the flagged identifiers (listeners/setState/IntersectionObserver/event-handler
+// locals) are either module-scoped, React-stable, or locally scoped inside the effect
+// and must NOT be added to dependency arrays.
+
 import { useEffect, useRef, useState, useCallback } from "react";
 
 /**
- * 3D mouse-parallax tilt for any element.
- * Returns a ref to attach to the element you want to tilt.
+ * 3D mouse-parallax tilt. Returns a ref to attach to the element.
  */
 export const useTilt = (intensity = 14) => {
   const ref = useRef(null);
@@ -34,8 +37,7 @@ export const useTilt = (intensity = 14) => {
 };
 
 /**
- * Animates a number from 0 -> target when the element first scrolls into view.
- * Returns [currentValue, refToObserve].
+ * Animates a number from 0 -> target when the element enters the viewport.
  */
 export const useCounter = (target, duration = 1800) => {
   const [val, setVal] = useState(0);
@@ -72,8 +74,7 @@ export const useCounter = (target, duration = 1800) => {
 };
 
 /**
- * Adds the `in` class to every `.reveal` descendant once it enters the viewport.
- * Re-scans on every render-key change so dynamically added elements are picked up.
+ * Adds `in` class to every `.reveal` descendant once it enters the viewport.
  */
 export const useReveal = (rootSelector = ".reveal") => {
   const scan = useCallback(() => {
@@ -96,7 +97,7 @@ export const useReveal = (rootSelector = ".reveal") => {
 };
 
 /**
- * Sets a flag once window.scrollY exceeds threshold. Used by the sticky header.
+ * True once window.scrollY exceeds threshold.
  */
 export const useScrolled = (threshold = 30) => {
   const [scrolled, setScrolled] = useState(false);

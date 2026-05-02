@@ -143,6 +143,8 @@ function useToast() {
         listeners.splice(index, 1)
       }
     };
+    // listeners is module-scoped, setState is stable from useState; intentionally empty deps.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return {
