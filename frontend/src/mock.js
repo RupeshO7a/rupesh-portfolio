@@ -71,6 +71,21 @@ export const portfolioData = {
       accent: "cyan"
     },
     {
+      id: "GRIPS", // A unique short name
+      name: "GRIPS",
+      subtitle: " - Glove-based Real-time Impact and Pattern System",
+      period: "Jan 2026 — Apr 2026",
+      description: "GRIPS is an AI-powered wearable cricket analytics system that uses smart glove-based sensor fusion, TGNN, and edge AI for real-time biomechanical shot classification and performance analysis.",
+      bullets: [
+        "Architected an AI-powered wearable cricket analytics system using TGNN, multi-modal sensor fusion, and edge inference for real-time shot classification.",
+        "Engineered a low-latency IoT pipeline with ESP32-C3, FSR sensors, and MPU6050 IMU achieving 93%+ classification accuracy with sub-150ms inference.",
+        "Implemented Physics-Informed AI and Federated Edge Learning for biomechanically consistent, privacy-preserving distributed model training."
+      ],
+      tags: ["Python", "PyTorch", "Flask", "React", "ESP32-C3", "IoT", "Graph Neural Networks", "Federated Learning", "Physics-Informed AI", "SQLite", "Chart.js", "REST API"],
+      link: "https://github.com/RupeshO7a/GRIPS---Glove-based-Real-time-Impact-and-Pattern-System", // Link to your project
+      accent: "cyan"
+    },
+    {
       id: "prism",
       name: "PRISM",
       subtitle: "Personnel, Resource, Inventory & Soldier Management",
